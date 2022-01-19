@@ -1,4 +1,6 @@
 package com.marinagaisina.inventoryapp.mainrunner;
+import com.marinagaisina.inventoryapp.entities.Item;
+
 import static java.lang.System.out;
 
 import java.util.Scanner;
@@ -20,7 +22,9 @@ public class Runner {
                 int option =Integer.parseInt(sin.next());
                 switch (option) {
                     case 1:
+                        if (addMenu() != null) {
 
+                        };
                         break;
                     case 2:
                         break;
@@ -42,5 +46,25 @@ public class Runner {
                 e.printStackTrace();
             }
         }
+    }
+    private static Item addMenu() {
+        Item newItem = new Item();
+        sb.append("\nPlease enter required information for the item that you would like to add to Inventory System:\nPlease enter a name for the item:\n");
+        out.println(sb.toString());
+        sb.delete(0, sb.length());
+        sin.nextLine();
+        try {
+            newItem.setItemName(sin.next());
+            out.println("\nPlease enter required information for the item that you would like to add to Inventory System:\nPlease enter a name for the item:\n");
+            out.println(sb.toString());
+            sb.delete(0, sb.length());
+        } catch (Exception e) {
+            sb.append("No data was entered or wrong symbols were used");
+            out.println(sb.toString());
+            return null;
+        } finally {
+            sb.delete(0, sb.length());
+        }
+        return newItem;
     }
 }

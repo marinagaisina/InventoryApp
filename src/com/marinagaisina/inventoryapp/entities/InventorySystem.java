@@ -1,10 +1,7 @@
 package com.marinagaisina.inventoryapp.entities;
 
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -15,26 +12,22 @@ public abstract class InventorySystem {
         this.itemCollection = new HashMap<>();
 
         if (this.getClass().getSimpleName().equals("ItemService")) {
-            File inventoryFile = new File("/src/sample.csv");
-            //if (inventoryFile.isFile()) {
+            try {
+                File inventoryFile = new File("/src/inventory.csv");
+                //if (inventoryFile.isFile()) {
                 String row;
-                BufferedReader csvReader = new BufferedReader(new FileReader("/src/sample.csv"));
+                BufferedReader csvReader = new BufferedReader(new FileReader("/src/inventory.csv"));
                 while ((row = csvReader.readLine()) != null) {
                     String[] data = row.split(",");
-                    // do something with the data
+                    Item item = new Item(data[0], data[1], Double.parseDouble(data[2]), Integer.parseInt(data[3]));
+                    this.getItemCollection().put(item.getItemName(), item);
                 }
+                System.out.println("The DB from inventory.csv uploaded successfully");
                 csvReader.close();
-            //}
 
-
-//            File readInFile = new File("/src/resources/sample.csv");
-//            Scanner scanner = new Scanner(readInFile);
-//            while (scanner.hasNextLine()) {
-                // scanner.useDelimiter(" {2}");
-//                String[] itemInfo = scanner.nextLine().split(" {2}");
-//                Item item = new Item(itemInfo[0], itemInfo[1], Double.parseDouble(itemInfo[2]), Integer.parseInt(itemInfo[3]));
-//                item.setQuantity(1);
-//                this.getItemCollection().put(item.getItemName(), item);
+            } catch (FileNotFoundException e) {
+                System.out.println("Database *.csv file for loading data wasn't found. No data was loaded.");
+            }
         }
     }
 
@@ -68,16 +61,13 @@ public abstract class InventorySystem {
         return add(findItemById(itemId));
     }
 
-    public Item remove(Item item, Integer removeQuantity) {
+    public Item remove(Item item) {
         if ((item == null)||(this.getItemCollection().size()==0)) return null;
 
         //if checkAvailability=> then reduceAvailability
         //if reduceAvailability - ok => remove
 
         return null;
-    }
-    public Item remove(Item item) {
-        return remove(item,1);
     }
 
     public Item remove(String itemName) {
@@ -87,7 +77,7 @@ public abstract class InventorySystem {
         return null;
     }
     public Item remove(Integer itemId) {
-        return findItemById(itemId);
+        return remove(findItemById(itemId));
     }
 
     public Item findItemById(Integer itemId) {

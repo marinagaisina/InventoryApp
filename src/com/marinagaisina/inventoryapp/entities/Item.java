@@ -19,6 +19,11 @@ public class Item {
         this.cartQuantity = 1;
     }
 
+    public Item() {
+        this.itemId += 1;
+        this.cartQuantity = 1;
+    }
+
     public Integer getItemId() {
         return itemId;
     }
@@ -75,7 +80,8 @@ public class Item {
         Item item = (Item) o;
         return getItemName().equals(item.getItemName())
                 && getItemDesc().equals(item.getItemDesc())
-                && getItemPrice().equals(item.getItemPrice());
+                && getItemPrice().equals(item.getItemPrice())
+                && getItemId().equals(item.getItemId());
     }
     @Override
     public String toString() {
