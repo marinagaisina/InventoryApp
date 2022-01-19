@@ -1,4 +1,4 @@
-package com.marinagaisina;
+package com.marinagaisina.inventoryapp.mainrunner;
 import static java.lang.System.out;
 
 import java.util.Scanner;
