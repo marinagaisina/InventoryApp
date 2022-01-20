@@ -7,6 +7,7 @@ import java.io.IOException;
 
 public class CartService extends InventorySystem {
     public CartService() throws IOException {
+        super();
     }
 
     @Override

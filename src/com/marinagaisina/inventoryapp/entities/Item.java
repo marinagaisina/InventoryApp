@@ -73,6 +73,7 @@ public class Item {
         return Objects.hash(getItemId()+getItemName()+getItemDesc());
     }
 
+    // Items are equal if they have the same Name, Description and Price.
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -80,8 +81,7 @@ public class Item {
         Item item = (Item) o;
         return getItemName().equals(item.getItemName())
                 && getItemDesc().equals(item.getItemDesc())
-                && getItemPrice().equals(item.getItemPrice())
-                && getItemId().equals(item.getItemId());
+                && getItemPrice().equals(item.getItemPrice());
     }
     @Override
     public String toString() {

@@ -7,7 +7,9 @@ import java.io.IOException;
 
 public class ItemService extends InventorySystem {
     public ItemService() throws IOException {
+        super();
     }
+
 
     @Override
     public void display() {
