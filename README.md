@@ -1,15 +1,25 @@
 # InventoryApp
 TASK: Build an inventory tracking web application for a logistics company.
-## Requirements
+## Functions
 Basic CRUD Functionality and one additional function for exporting data to a CSV:
   *	Create inventory items.
   *	Edit Them.
   *	Delete Them.
   *	View a list of them.
   *	Push a button export product data to a CSV.
+---
+Optional functions:
+  *	Allow image uploads AND store image with generated thumbnails
+  * When deleting, allow deletion comments and undeletion
+  * Filtering based on fields/inventory count/tags/other metadata
+  * Ability to assign/remove inventory items to a named group/collection
+  * Ability to create warehouses/locations and assign inventory to specific locations
+  * Ability to create “shipments” and assign inventory to the shipment, and adjust inventory appropriately
+  * Ability to generate a report on inventory levels over time, like: most in-stock or out-of-stock last month
+
   ---------------------
 ## Requirements
-  * Installed JDK is required in order to run the app.
+  * Installed JDK is required to run the app.
   * IDE is optional. If you use IDE, please make sure it is bounded with JDK.
   ---------------------
 ## Installation
