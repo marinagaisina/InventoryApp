@@ -1,17 +1,14 @@
 package com.marinagaisina.inventoryapp.entities;
 
-
-import com.marinagaisina.inventoryapp.service.ItemService;
-
 import java.io.*;
-import java.util.HashMap;
-import java.util.Scanner;
+import java.util.TreeMap;
 
 public abstract class InventorySystem {
-    private final HashMap<String, Item> itemCollection;
+    private final TreeMap<String, Item> itemCollection;
 
     public InventorySystem() throws IOException {
-        this.itemCollection = new HashMap<>();
+        this.itemCollection = new TreeMap<>();
+        //System.out.println("Would you like to load the data from the example file or let's start with an empty data base?");
 
         if (this.getClass().getSimpleName().equals("ItemService")) {
             try {
@@ -33,30 +30,38 @@ public abstract class InventorySystem {
         }
     }
 
-    public HashMap<String, Item> getItemCollection() {
+    protected TreeMap<String, Item> getItemCollection() {
         return itemCollection;
     }
-    public Boolean add(Item item) {
-        if (item == null) {
+
+    /**
+     * @description Boolean add(Item item) - adds an Item object to the inventory collection.
+     * @param newItem - an object of Item
+     * @return true 1) if Item was added to the inventory collection
+     *              2) if the same Item was found (foundItem) and quantity was increased by available quantity value of a new Item
+     * @throws NumberFormatException if a user tried to create an item with an empty name, or description or with price=0;
+     * @details: reduces by 1 the static generated Id value in Item class if the newItem wasn't added to the collection
+     */
+
+    public Boolean add(Item newItem) {
+        if (newItem == null) {
             return false;
         }
-        if ((item.getItemName().length() == 0)||(item.getItemDesc().length()==0)||
-                (item.getItemPrice() ==0)||(item.getAvailableQuantity()==0)) {
-            System.out.println("Item name/Item description/Item price or Item Available Quantity one or all fields are incorrect.");
+        // !! for future: create a method for item name validation check, it should not allow to create a name that contains numbers only
+        if ((newItem.getItemName().length() == 0)||(newItem.getItemDesc().length()==0)||(newItem.getItemPrice() ==0)) {
+            Item.setLastGeneratedID(Item.getLastGeneratedID()-1);
+            System.out.println("Item name/Item description or Item price - one or all fields are incorrect.");
             throw new NumberFormatException("NumberFormatException");
         }
-        if (this.getItemCollection().size() == 0) {
-            this.getItemCollection().put(item.getItemName(), item);
-            return true;
-        }
-        if (this.itemCollection.containsValue(item)) {
-            Item foundItem = this.getItemCollection().get(item.getItemName());
-            foundItem.setAvailableQuantity(item.getAvailableQuantity()+ item.getAvailableQuantity());
+        if (this.itemCollection.containsValue(newItem)) {
+            Item foundItem = this.getItemCollection().get(newItem.getItemName());
+            foundItem.setAvailableQuantity(foundItem.getAvailableQuantity()+ newItem.getAvailableQuantity());
             System.out.println(foundItem.getItemName()+"'s Available quantity increased by "+
-                    item.getAvailableQuantity()+".\nNow available quantity is "+foundItem.getAvailableQuantity());
+                    newItem.getAvailableQuantity()+".\nNow available quantity is "+foundItem.getAvailableQuantity());
+            Item.setLastGeneratedID(Item.getLastGeneratedID()-1);
         } else {
-            this.getItemCollection().put(item.getItemName(), item);
-            System.out.println(item.getItemName()+ " was successfully added to Inventory System.");
+            this.getItemCollection().put(newItem.getItemName(), newItem);
+            System.out.println(newItem.getItemName()+ " was successfully added to Inventory System.");
         }
         return true;
     }

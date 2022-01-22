@@ -10,7 +10,6 @@ public class ItemService extends InventorySystem {
         super();
     }
 
-
     @Override
     public void display() {
         System.out.println("Inventory:");

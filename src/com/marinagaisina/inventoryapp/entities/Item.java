@@ -1,9 +1,12 @@
 package com.marinagaisina.inventoryapp.entities;
 
+import jdk.jfr.Description;
+
 import java.util.Objects;
 
 public class Item {
-    private Integer itemId=0;
+    private static int lastGeneratedID=1;
+    private Integer itemId;
     private String itemName;
     private String itemDesc;
     private Double itemPrice;
@@ -11,12 +14,20 @@ public class Item {
     private Integer availableQuantity;
 
     public Item(String itemName, String itemDesc, Double itemPrice, Integer availableQuantity) {
-        this.itemId += 1;
+        this.itemId=lastGeneratedID++;
         this.itemName = itemName;
         this.itemDesc = itemDesc;
         this.itemPrice = itemPrice;
         this.availableQuantity = availableQuantity;
         this.cartQuantity = 1;
+    }
+
+    public static int getLastGeneratedID() {
+        return lastGeneratedID;
+    }
+
+    public static void setLastGeneratedID(int setID) {
+        Item.lastGeneratedID = setID;
     }
 
     public Item() {
@@ -73,7 +84,10 @@ public class Item {
         return Objects.hash(getItemId()+getItemName()+getItemDesc());
     }
 
-    // Items are equal if they have the same Name, Description and Price.
+    /**
+     * Items are equal if they have the same Name, Description and Price (only)
+     */
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
